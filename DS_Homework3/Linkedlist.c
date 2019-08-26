@@ -8,6 +8,8 @@ struct Node {
   struct Node* next;
 };
 
+FILE* file;
+
 // This function rotates a linked list counter-clockwise and
 // updates the head. The function assumes that k is smaller
 // than size of linked list. It doesn't modify the list if
@@ -142,18 +144,46 @@ void printList(struct Node* node, int num) {
 }
 
 void ReadData(struct Node** head_ref, struct Node** head_ref2) {
-  push(head_ref, "love");
-  push(head_ref, "is");
-  push(head_ref, "if");
-  push(head_ref, "I");
-  push(head_ref, "know");
-  push(head_ref, "what");
+  char file_name[] = "LinkedList_data.txt";
+  char line[100];
+  char* result = NULL;
+  char* delim = " ";
+  // char * pch;
+  memset(line, '\0', sizeof(line));
 
-  push(head_ref2, "you");
-  push(head_ref2, "it");
-  push(head_ref2, "is");
-  push(head_ref2, "because");
-  push(head_ref2, "of");
+  file = fopen(file_name, "r");
+  if (!file) {
+    fprintf(stderr, "failed to open file answer_dic.csv\n");
+  }
+  int count = 0;
+
+  while (fgets(line, 100, file) != NULL) {
+    line[strlen(line) - 1] = '\0';
+    result = strtok(line, delim);
+    while (result != NULL) {
+      if (count == 0) {
+        push(head_ref, result);
+      } else {
+        push(head_ref2, result);
+      }
+      // printf("%s\t", result);
+      result = strtok(NULL, delim);
+    }
+    count++;
+  }
+
+  // push(head_ref, "love");
+  // push(head_ref, "is");
+  // push(head_ref, "if");
+  // push(head_ref, "I");
+  // push(head_ref, "know");
+  // push(head_ref, "what");
+
+  // push(head_ref2, "you");
+  // push(head_ref2, "it");
+  // push(head_ref2, "is");
+  // push(head_ref2, "because");
+  // push(head_ref2, "of");
 }
 
 int main() {
@@ -162,9 +192,9 @@ int main() {
   printf(
       "Follow the given instruction to run the code operation. \n1. "
       "push \n2. longest common prefix \n3. reverse \n4. rotate\n5. merge\n6. "
-      "odd even \n7. pop\n");
+      "odd even \n");
   /*push data to the linked lists */
-  printf("\n1.push\nStart creating a list from file \"asdf.txt\" \n");
+  printf("\n1.push\nStart creating a list from file. \n");
   ReadData(&head, &head2);
   printf("The linked list \n");
   printList(head, 1);

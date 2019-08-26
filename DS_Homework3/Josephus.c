@@ -1,0 +1,204 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+FILE* file;
+time_t timep;
+struct tm* p;
+
+/* structure for a node in circular
+   linked list */
+struct Node {
+  char data[30];
+  struct Node* next;
+};
+/* UTILITY FUNCTIONS */
+/* Function to push a node */
+void push(struct Node** head_ref, char new_data[256]) {
+  // printf("pushing data : %s\n",new_data);
+  /* allocate node */
+  struct Node* new_node = malloc(sizeof(struct Node));
+
+  /* put in the data  */
+  //*new_node->data = new_data;
+  strcpy(new_node->data, new_data);
+
+  /* link the old list off the new node */
+  new_node->next = (*head_ref);
+
+  /* move the head to point to the new node */
+  (*head_ref) = new_node;
+}
+
+void ReadData(struct Node** head, struct Node** prev) {
+  char file_name[] = "Josephus_data.txt";
+  printf("Start read data from a file \n");
+  file = fopen(file_name, "r");
+  if (file == NULL) {
+    printf("No file!\n");
+    exit(1);
+  }
+  int count = 0;
+  char line[256];
+  while (fgets(line, 256, file)) {
+    if (count == 0) {
+      line[strlen(line) - 1] = '\0';
+      push(head, line);
+      printf("%s is appended.\n", line);
+      printf("head->data: %s\n", (*head)->data);
+      prev = head;
+      printf("prev -> data: %s\n", (*prev)->data);
+    } else {
+      line[strlen(line) - 1] = '\0';
+      push(prev, line);
+      printf("%s is appended.\n", line);
+      printf("prev->data: %s\n", (*prev)->next->data);
+      *prev = (*prev)->next;
+    }
+    count++;
+  }
+  fclose(file);
+  printf("prev->data1: %s\n", (*prev)->data);
+  printf("head->next->data: %s\n", (*head)->next->data);
+}
+
+/* Function to find the only person left
+   after one in every m-th node is killed
+   in a circle of n nodes */
+void getJosephusPosition(int m, int n) {
+  if (m == 0) {
+    printf("Nobody dead.\n");
+  } else if (m == 1) {
+    printf("Everyone dead.\n");
+  } else {
+    // Create a circular linked list of
+    // size N.
+    // struct Node* head = malloc(sizeof(struct Node));
+    // head->data = 1;
+    // struct Node* prev = head;
+    // for (int i = 2; i <= n; i++) {
+    //   prev->next = malloc(sizeof(struct Node));
+    //   prev->data = i;
+    //   prev = prev->next;
+    // }
+
+    // struct Node* head = malloc(sizeof(struct Node));
+    // strcpy(head->data, "Jim");
+    // struct Node* prev = head;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Tom");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Henry");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Hank");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "WenJ");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Cody");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Edward");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Ben");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Sine");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "PinTsai");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Patty");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Helen");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Haoze");
+    // prev = prev->next;
+    // prev->next = malloc(sizeof(struct Node));
+    // strcpy(prev->next->data, "Yuling");
+    // prev = prev->next;
+
+    struct Node* head = malloc(sizeof(struct Node));
+    struct Node* prev = head;
+    char file_name[] = "Josephus_data.txt";
+    printf("\nRead data from %s... \n",file_name);
+    file = fopen(file_name, "r");
+    if (file == NULL) {
+      printf("No file!\n");
+      exit(1);
+    }
+    int count = 0;
+    char line[256];
+    while (fgets(line, 256, file)) {
+      if (count == 0) {
+        line[strlen(line) - 1] = '\0';
+        strcpy(head->data, line);
+        printf("%s is appended. \n", line);
+      }
+      else {
+        line[strlen(line) - 1] = '\0';
+        prev->next = malloc(sizeof(struct Node));
+        strcpy(prev->next->data, line);
+        printf("%s is appended. \n", line);
+        prev = prev->next;
+      }
+      count++;
+    }
+    prev->next = head;  // Connect last
+                        // node to first
+
+    printf("---------------\nEveryone is ready. Start killing...\n");
+    /* while only one node is left in the
+    linked list*/
+    struct Node *ptr1 = head, *ptr2 = head;
+    while (ptr1->next != ptr1) {
+      // Find m-th node
+      int count = 1;
+      while (count != m) {
+        ptr2 = ptr1;
+        ptr1 = ptr1->next;
+        count++;
+      }
+
+      /* Remove the m-th node */
+      ptr2->next = ptr1->next;
+      ptr1 = ptr2->next;
+    }
+    //printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
+    printf("\nFinish killing.\n%s is the final survivor of %d/%d.\n", ptr1->data, (1 + p->tm_mon), p->tm_mday);
+
+    // printf(
+    //     "Last person left standing "
+    //     "(Josephus Position) is %s\n ",
+    //     ptr1->data);
+  }
+}
+
+/* Driver program to test above functions */
+int main() {
+  int n = 14, m = 2;
+
+  // char* wday[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+  
+  time(&timep);
+  p = gmtime(&timep);
+  // printf("%d %d %d\n", (1900 + p->tm_year), (1 + p->tm_mon), p->tm_mday);
+  //   printf("%s %d; %d; %d\n", wday[p->tm_wday], p->tm_hour, p->tm_min,
+  //   p->tm_sec);
+  printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
+  // m = (1 + p->tm_mon) * p->tm_mday % 5;
+  m = 8 * 25 % 3;
+  printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
+
+  getJosephusPosition(m, n);
+
+  return 0;
+}
