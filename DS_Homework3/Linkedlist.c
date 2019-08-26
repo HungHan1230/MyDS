@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-char key;
 /* Link list node */
 struct Node {
-  int data;
+  char data[10];
   struct Node* next;
 };
 
@@ -116,12 +115,14 @@ void OddEven(struct Node** head) {
 
 /* UTILITY FUNCTIONS */
 /* Function to push a node */
-void push(struct Node** head_ref, int new_data) {
+void push(struct Node** head_ref, char new_data[10]) {
+  // printf("pushing data : %s\n",new_data);
   /* allocate node */
-  struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+  struct Node* new_node = malloc(sizeof(struct Node));
 
   /* put in the data  */
-  new_node->data = new_data;
+  //*new_node->data = new_data;
+  strcpy(new_node->data, new_data);
 
   /* link the old list off the new node */
   new_node->next = (*head_ref);
@@ -134,27 +135,34 @@ void push(struct Node** head_ref, int new_data) {
 void printList(struct Node* node, int num) {
   printf("List%d: ", num);
   while (node != NULL) {
-    printf("%d ", node->data);
+    printf("%s ", node->data);
     node = node->next;
   }
   printf("\n");
 }
 
 void ReadData(struct Node** head_ref, struct Node** head_ref2) {
-  // key = "";
-  // create a list 10->20->30->40->50->60
-  for (int i = 60; i > 0; i -= 10)
-    push(head_ref, i);
-  for (int i = 60; i > 0; i -= 10)
-    push(head_ref2, i);
+  push(head_ref, "love");
+  push(head_ref, "is");
+  push(head_ref, "if");
+  push(head_ref, "I");
+  push(head_ref, "know");
+  push(head_ref, "what");
+
+  push(head_ref2, "you");
+  push(head_ref2, "it");
+  push(head_ref2, "is");
+  push(head_ref2, "because");
+  push(head_ref2, "of");
 }
 
 int main() {
   struct Node* head = NULL;
   struct Node* head2 = NULL;
   printf(
-      "Following the given instruction to complete the code operation. \n1. "
-      "push \n2. pop \n3. reverse \n4. rotate\n5. merge\n6. odd even \n");
+      "Follow the given instruction to run the code operation. \n1. "
+      "push \n2. longest common prefix \n3. reverse \n4. rotate\n5. merge\n6. "
+      "odd even \n7. pop\n");
   /*push data to the linked lists */
   printf("\n1.push\nStart creating a list from file \"asdf.txt\" \n");
   ReadData(&head, &head2);
@@ -163,7 +171,7 @@ int main() {
   printList(head2, 2);
 
   /*Rotate the linked lists, k = 4 */
-  printf("\n\n2.Rotate\nRotate the linked list by given k = 4.\n");
+  printf("\n\n3.Rotate\nRotate the linked list by given k = 4.\n");
 
   rotate(&head, 4);
   rotate(&head2, 4);
@@ -172,7 +180,7 @@ int main() {
   printList(head2, 2);
 
   /*Reverse the linked lists */
-  printf("\n\n3.Reverse\nReverse the linked.\n");
+  printf("\n\n4.Reverse\nReverse the linked.\n");
   reverse(&head);
   reverse(&head2);
   printf("Reversed Linked list \n");
@@ -180,17 +188,19 @@ int main() {
   printList(head2, 2);
 
   /*Merge the two linked lists */
-  printf("\n\n4.Reverse\nMerge List2 to List1.\n");
+  printf("\n\n5.Merge\nMerge List2 to List1.\n");
   merge(head, &head2);
   printList(head, 1);
   printList(head2, 2);
 
   /*Merge the two linked lists */
-  printf("\n\n5.OddEven\nChange the order by OddEven.\n");
+  printf("\n\n6.OddEven\nChange the order by OddEven.\n");
   OddEven(&head);
   printList(head, 1);
-  /*Think about what can merge function be a little bit different than just append it to the tail of List1. */
+  /*Think about what can merge function be a little bit different than just
+   * append it to the tail of List1. */
   /*Pop. Delete the last two node */
+  /*printf("\n\n7.Pop\nDelete the last two nodes.\n");*/
   /*Find the finall answer by changing the numbers to ASCII */
 
   printf("\n");
