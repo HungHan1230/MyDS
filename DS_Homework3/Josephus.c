@@ -32,38 +32,6 @@ void push(struct Node** head_ref, char new_data[256]) {
   (*head_ref) = new_node;
 }
 
-void ReadData(struct Node** head, struct Node** prev) {
-  char file_name[] = "Josephus_data.txt";
-  printf("Start read data from a file \n");
-  file = fopen(file_name, "r");
-  if (file == NULL) {
-    printf("No file!\n");
-    exit(1);
-  }
-  int count = 0;
-  char line[256];
-  while (fgets(line, 256, file)) {
-    if (count == 0) {
-      line[strlen(line) - 1] = '\0';
-      push(head, line);
-      printf("%s is appended.\n", line);
-      printf("head->data: %s\n", (*head)->data);
-      prev = head;
-      printf("prev -> data: %s\n", (*prev)->data);
-    } else {
-      line[strlen(line) - 1] = '\0';
-      push(prev, line);
-      printf("%s is appended.\n", line);
-      printf("prev->data: %s\n", (*prev)->next->data);
-      *prev = (*prev)->next;
-    }
-    count++;
-  }
-  fclose(file);
-  printf("prev->data1: %s\n", (*prev)->data);
-  printf("head->next->data: %s\n", (*head)->next->data);
-}
-
 void reverse(struct Node* head_ref) {
   struct Node* prev = NULL;
   struct Node* current = head_ref;
@@ -79,20 +47,20 @@ void reverse(struct Node* head_ref) {
     prev = current;
     current = next;
   }
-  head_ref = prev;  
+  head_ref = prev;
 }
 /* Function to find the only person left
    after one in every m-th node is killed
    in a circle of n nodes */
 void getJosephusPosition(int m, int n) {
   if (m == 0) {
-    printf("Nobody dead.\n");
+    printf("Nobody is going to die. \nWhat a wonderful day!\n");
   } else if (m == 1) {
-    printf("Everyone dead.\n");
+    printf("Oops, everyone is going to die.\n");
   } else {
     struct Node* head = malloc(sizeof(struct Node));
     struct Node* prev = head;
-    char file_name[] = "Josephus_data2.txt";
+    char file_name[] = "Josephus_data.txt";
     printf("\nRead data from %s... \n", file_name);
     file = fopen(file_name, "r");
     if (file == NULL) {
@@ -145,15 +113,15 @@ void getJosephusPosition(int m, int n) {
         // printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
         printf("\nFinish killing.\n%s is the final survivor of %d/%d.\n",
                ptr1->data, (1 + p->tm_mon), p->tm_mday);
+        // printf("\nFinish killing.\n%s is the final survivor of %d/%d.\n",
+        //        ptr1->data, 8, 27);
 
         break;
       case 2:
-        
-
         prev->next = head;  // Connect last
                             // node to first
-        //printf("test: %s\n",head->next->data);
-        reverse(head);        
+        // printf("test: %s\n",head->next->data);
+        reverse(head);
 
         /* while only one node is left in the
         linked list*/
@@ -174,6 +142,8 @@ void getJosephusPosition(int m, int n) {
         // printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
         printf("\nFinish killing.\n%s is the final survivor of %d/%d.\n",
                ptr12->data, (1 + p->tm_mon), p->tm_mday);
+        // printf("\nFinish killing.\n%s is the final survivor of %d/%d.\n",
+        //        ptr12->data, 8, 27);
         break;
     }
 
@@ -197,9 +167,11 @@ int main() {
   //   printf("%s %d; %d; %d\n", wday[p->tm_wday], p->tm_hour, p->tm_min,
   //   p->tm_sec);
   printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
-  // m = (1 + p->tm_mon) * p->tm_mday % 5;
-  m = 8 * 25 % 3;
+  // printf("month: %d, Date: %d\n", 8, 27);
+  m = (1 + p->tm_mon) * p->tm_mday % 5;
+  // m = 8 * 27 % 5;
   printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
+  // printf("%d * %d mod 5 = %d\n", 8, 27, m);
 
   getJosephusPosition(m, n);
 

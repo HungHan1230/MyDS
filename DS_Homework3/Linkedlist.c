@@ -191,40 +191,39 @@ int main() {
   struct Node* head2 = NULL;
   printf(
       "Follow the given instruction to run the code operation. \n1. "
-      "push \n2. longest common prefix \n3. reverse \n4. rotate\n5. merge\n6. "
-      "odd even \n");
+      "push \n2. rotate \n3. reverse\n4. merge\n5. odd even \n");
   /*push data to the linked lists */
   printf("\n1.push\nStart creating a list from file. \n");
   ReadData(&head, &head2);
-  printf("The linked list \n");
+  printf("The linked lists \n");
   printList(head, 1);
   printList(head2, 2);
 
   /*Rotate the linked lists, k = 4 */
-  printf("\n\n3.Rotate\nRotate the linked list by given k = 4.\n");
+  printf("\n\n2.Rotate\nRotate the linked list by given k = 4.\n");
 
   rotate(&head, 4);
   rotate(&head2, 4);
-  printf("Rotated Linked list \n");
+  printf("Rotated Linked lists \n");
   printList(head, 1);
   printList(head2, 2);
 
   /*Reverse the linked lists */
-  printf("\n\n4.Reverse\nReverse the linked.\n");
+  printf("\n\n3.Reverse\nReverse the linked.\n");
   reverse(&head);
   reverse(&head2);
-  printf("Reversed Linked list \n");
+  printf("Reversed Linked lists \n");
   printList(head, 1);
   printList(head2, 2);
 
   /*Merge the two linked lists */
-  printf("\n\n5.Merge\nMerge List2 to List1.\n");
+  printf("\n\n4.Merge\nMerge List2 to List1.\n");
   merge(head, &head2);
   printList(head, 1);
   printList(head2, 2);
 
   /*Merge the two linked lists */
-  printf("\n\n6.OddEven\nChange the order by OddEven.\n");
+  printf("\n\n5.OddEven\nChange the order by OddEven.\n");
   OddEven(&head);
   printList(head, 1);
   /*Think about what can merge function be a little bit different than just
