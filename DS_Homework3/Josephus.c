@@ -52,7 +52,7 @@ void reverse(struct Node* head_ref) {
 /* Function to find the only person left
    after one in every m-th node is killed
    in a circle of n nodes */
-void getJosephusPosition(int m, int n) {
+void getJosephusPosition(int m) {
   if (m == 0) {
     printf("Nobody is going to die. \nWhat a wonderful day!\n");
   } else if (m == 1) {
@@ -61,20 +61,24 @@ void getJosephusPosition(int m, int n) {
     struct Node* head = malloc(sizeof(struct Node));
     struct Node* prev = head;
     char file_name[] = "Josephus_data.txt";
+    int count = 0;
+    char line[256];
+
     printf("\nRead data from %s... \n", file_name);
     file = fopen(file_name, "r");
     if (file == NULL) {
       printf("No file!\n");
       exit(1);
     }
-    int count = 0;
-    char line[256];
+
     while (fgets(line, 256, file)) {
       if (count == 0) {
         line[strlen(line) - 1] = '\0';
         strcpy(head->data, line);
         printf("%s is appended. \n", line);
-      } else {
+      }
+      // using another pointer prev for Josephus later
+      else {
         line[strlen(line) - 1] = '\0';
         prev->next = malloc(sizeof(struct Node));
         strcpy(prev->next->data, line);
@@ -153,27 +157,18 @@ void getJosephusPosition(int m, int n) {
     //     ptr1->data);
   }
 }
-
-/* Driver program to test above functions */
 int main() {
-  // int n = 14, m = 2;
-  int n, m;
-
-  // char* wday[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-
+  int m;
   time(&timep);
   p = gmtime(&timep);
   // printf("%d %d %d\n", (1900 + p->tm_year), (1 + p->tm_mon), p->tm_mday);
   //   printf("%s %d; %d; %d\n", wday[p->tm_wday], p->tm_hour, p->tm_min,
   //   p->tm_sec);
   printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
-  // printf("month: %d, Date: %d\n", 8, 27);
   m = (1 + p->tm_mon) * p->tm_mday % 5;
-  // m = 8 * 27 % 5;
   printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
   // printf("%d * %d mod 5 = %d\n", 8, 27, m);
-
-  getJosephusPosition(m, n);
+  getJosephusPosition(m);
 
   return 0;
 }

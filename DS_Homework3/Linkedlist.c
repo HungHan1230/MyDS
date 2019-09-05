@@ -153,7 +153,7 @@ void ReadData(struct Node** head_ref, struct Node** head_ref2) {
 
   file = fopen(file_name, "r");
   if (!file) {
-    fprintf(stderr, "failed to open file answer_dic.csv\n");
+    fprintf(stderr, "failed to open file LinkedList_data.txt\n");
   }
   int count = 0;
 
@@ -163,7 +163,8 @@ void ReadData(struct Node** head_ref, struct Node** head_ref2) {
     while (result != NULL) {
       if (count == 0) {
         push(head_ref, result);
-      } else {
+      } 
+      else {
         push(head_ref2, result);
       }
       // printf("%s\t", result);

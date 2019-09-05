@@ -91,7 +91,7 @@ int main(void) {
 
   printf("Given linked list \n");
   printList(head);
-  rotate(&head, 4);
+  rotate(&head, 5);
 
   printf("\nRotated Linked list \n");
   printList(head);
