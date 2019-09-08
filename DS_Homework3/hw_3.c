@@ -18,7 +18,6 @@ struct Node {
 /* Function to print linked list */
 void printList(struct Node* node) {
   printf("Prisoner list:\n");
-  
   while (node != NULL) {
     if (node->next != NULL) {
       printf("%s -> ", node->data);
@@ -62,7 +61,7 @@ void reverse(struct Node* head_ref) {
 // updates the head. The function assumes that k is smaller
 // than size of linked list. It doesn't modify the list if
 // k is greater than or equal to size
-void rotate(struct Node** head_ref, int k) {
+void rotate(struct Node** head_ref,struct Node** prev, int k) {
   if (k == 0)
     return;
   // Let us understand the below code for example k = 4 and
@@ -92,6 +91,7 @@ void rotate(struct Node** head_ref, int k) {
   // change next of kth node to NULL
   // next of 40 is now NULL
   kthNode->next = NULL;
+  *prev = kthNode;  
 }
 /* Function to change the order of the linked list*/
 void OddEven(struct Node** head) {
@@ -142,72 +142,75 @@ void ReadData(struct Node** head, struct Node** prev) {
    after one in every m-th node is killed
    in the circular linked list. */
 void getJosephusPosition(int m) {
-    struct Node* head = malloc(sizeof(struct Node));
-    struct Node* prev = head;
-    ReadData(&head, &prev);
+  struct Node* head = malloc(sizeof(struct Node));
+  struct Node* prev = head;
+  ReadData(&head, &prev);
+  printf("\n");
+  printList(head);
 
-    printf("---------------\nChange order by odd even function.\n");
-    OddEven(&head);
-    printList(head);
+  printf("---------------\nChange order by odd even function.\n");
+  OddEven(&head);
+  printList(head);
 
-    printf("---------------\nChange order by rotate function with index = %d.\n",m);
-    rotate(&head,m);
-    printList(head);
+  printf("---------------\nChange order by rotate function with index = %d.\n",
+         m);
+  rotate(&head,&prev, m);
+  printList(head);
 
-    printf("---------------\nEveryone is ready. Start elimination.\n");
-    printf(
-        "Which side would you like to start "
-        "?\n\n\t(1)rigth\n\t(2)left\n");
-    scanf("%d", &direction);
+  printf("---------------\nEveryone is ready. Start elimination.\n");
+  printf(
+      "Which side would you like to start "
+      "?\n\n\t(1)rigth\n\t(2)left\n");
+  scanf("%d", &direction);
 
-    switch (direction) {
-      case 1:
-        prev->next = head;  // Connect last
-                            // node to first
+  switch (direction) {
+    case 1:      
+      prev->next = head;  // Connect last
+                          // node to first
 
-        /* while only one node is left in the
-        linked list*/
-        struct Node *ptr1 = head, *ptr2 = head;
-        while (ptr1->next != ptr1) {
-          // Find m-th node
-          int count = 1;
-          while (count != m) {
-            ptr2 = ptr1;
-            ptr1 = ptr1->next;
-            count++;
-          }
-          /* Remove the m-th node */
-          ptr2->next = ptr1->next;
-          ptr1 = ptr2->next;
-        }        
-        printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
-               ptr1->data, (1 + p->tm_mon), p->tm_mday);
-        
-        break;
-      case 2:
-        prev->next = head;  // Connect last
-                            // node to first
-        reverse(head);
+      /* while only one node is left in the
+      linked list*/
+      struct Node *ptr1 = head, *ptr2 = head;
+      while (ptr1->next != ptr1) {
+        // Find m-th node
+        int count = 1;        
+        while (count != m) {
+          ptr2 = ptr1;
+          ptr1 = ptr1->next;
+          count++;
+        }
+        /* Remove the m-th node */
+        ptr2->next = ptr1->next;
+        ptr1 = ptr2->next;
+      }
+      printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
+             ptr1->data, (1 + p->tm_mon), p->tm_mday);
 
-        /* while only one node is left in the
-        linked list*/
-        struct Node *ptr12 = head, *ptr22 = head;
-        while (ptr12->next != ptr12) {
-          // Find m-th node
-          int count = 1;
-          while (count != m) {
-            ptr22 = ptr12;
-            ptr12 = ptr12->next;
-            count++;
-          }
-          /* Remove the m-th node */
-          ptr22->next = ptr12->next;
-          ptr12 = ptr22->next;
-        }        
-        printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
-               ptr12->data, (1 + p->tm_mon), p->tm_mday);        
-        break;
-    }  
+      break;
+    case 2:      
+      prev->next = head;  // Connect last
+                          // node to first
+      reverse(head);      
+
+      /* while only one node is left in the
+      linked list*/
+      struct Node *ptr12 = head, *ptr22 = head;
+      while (ptr12->next != ptr12) {
+        // Find m-th node
+        int count = 1;
+        while (count != m) {
+          ptr22 = ptr12;
+          ptr12 = ptr12->next;
+          count++;
+        }
+        /* Remove the m-th node */
+        ptr22->next = ptr12->next;
+        ptr12 = ptr22->next;
+      }
+      printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
+             ptr12->data, (1 + p->tm_mon), p->tm_mday);
+      break;
+  }
 }
 
 int main() {
@@ -215,15 +218,15 @@ int main() {
   time(&timep);
   p = gmtime(&timep);
   printf("Today is %d/%d.\n", (1 + p->tm_mon), p->tm_mday);
-  m = (1 + p->tm_mon) * p->tm_mday % 5;
+  m = (1 + p->tm_mon) * p->tm_mday % 5;  
   printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
   // printf("%d * %d mod 5 = %d\n", 8, 27, m);
-  if(m == 0){
-      printf("default m = 2\n");
-      m = 2;
-  }
+  if (m == 0) {
+    printf("default m = 2\n");
+    m = 2;
+  } 
   else
-      printf("default m = %d\n",m);      
+    printf("m = %d\n", m);
 
   getJosephusPosition(m);
 

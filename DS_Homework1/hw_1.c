@@ -62,63 +62,40 @@ void ReadData() {
     }
 
     while (fgets(line, MAX_LINE_SIZE, file) != NULL) {
-        result = strtok(line, ",");
-        // printf("!!!!!!!!!!!%s\n", result);
-        strcpy(data[count].key, result);
-        // printf("%d", sizeof(data[count].key));
+        result = strtok(line, ",");        
+        strcpy(data[count].key, result);        
 
-        // printf("%s \n", result);
-
-        result = strtok(NULL, ",");
-        // printf("!!!!!!!!!!!%s\n", result);
+        result = strtok(NULL, ",");        
         strcpy(data[count].value, result);
-
-        // printf("key: %s , count:%d\n", data[count].key, count);
-        // printf("value: %s \n", data[count].value);
-
         count += 1;
-        // break;
-        // printf("%s \n", result);
     }
-    // printf("value:%s",data[0].value);
+
     fclose(file);
-
-    // printf("size of data[]: %d\n", sizeof(data) / sizeof(Data));
-    // printf("data[0].key: %s\n", data[0].key);
-    // printf("data[0].value: %s\n", data[0].value);
-
     file = fopen("article.txt", "r");
     int countc = 0;
-
     text = mytext;
 
     if (file) {
         while (article != EOF) {
             article = fgetc(file);
-            if (article != EOF) {
-                // printf("count: %d \n", countc);
-                // printf("%c", article);
+            if (article != EOF) {                
                 mytext[countc] = article;
                 countc++;
             }
         }
-    } else {
+    } 
+    else {
         fprintf(stderr, "failed to open file for reading\n");
     }
     fclose(file);
-    printf("\narticle:\n %s \n", text);
-    // strncpy(txt, article, 360);
+    printf("\narticle:\n%s \n", text);    
 }
 
 void CaesarPasswd() {
     int i, j, k, t;
     int move = 13;
     memset(passwd, '\0', sizeof(passwd));
-
-    strncpy(passwd, CipherText, 76);
-
-    // printf("\nsize of CipherText %d\n", strlen(CipherText));
-    // printf("\nsize of passwd %d\n", strlen(passwd));
+    strncpy(passwd, CipherText, 76);    
 
     for (i = 0; i < strlen(passwd); i++) {
         if (passwd[i] >= 'A' && passwd[i] <= 'Z') {
@@ -136,11 +113,6 @@ void CaesarPasswd() {
         // printf("test: %c\n", *(key + index));
     }
     printf("Your key: %s\n", key);
-
-    // printf("Enter message to be encrypted:");
-    // scanf("%s", passwd);
-    // printf("\nEnter shift amount(1-25):");
-    // scanf("%d%*c", &move);
 }
 
 // Prints occurrences of txt[] in pat[]
@@ -231,11 +203,9 @@ void findAnswer() {
 
     memset(finalAnswer, '\0', sizeof(finalAnswer));
 
-    printf("The key of the index array is: \n");
-    for(int indexarrayI = 0; indexarrayI < 3; indexarrayI++){
-        printf("key%d : %d\n",indexarrayI, indexArray[indexarrayI]);
-    }    
-
+    printf("\nThe key of the index array is: \n");
+    for(int indexarrayI = 0; indexarrayI < 3; indexarrayI++)
+        printf("key%d : %d\n",indexarrayI+1, indexArray[indexarrayI]);
     printf("\nThe final answer is: ");
 
     for (int i = 0; i < dataSize; i++) {

@@ -32,32 +32,57 @@ void push(struct Node** head_ref, char new_data[256]) {
   (*head_ref) = new_node;
 }
 
-void reverse(struct Node* head_ref) {
-  struct Node* prev = NULL;
-  struct Node* current = head_ref;
-  struct Node* next = NULL;
-  while (current != NULL) {
-    // Store next
-    next = current->next;
+/* Function to reverse the linked list */
+void reverse(struct Node** head_ref) 
+{ 
+    struct Node* prev = NULL; 
+    struct Node* current = *head_ref; 
+    struct Node* next = NULL; 
+    while (current != NULL) { 
+        // Store next 
+        next = current->next; 
+  
+        // Reverse current node's pointer 
+        current->next = prev; 
+  
+        // Move pointers one position ahead. 
+        prev = current; 
+        current = next; 
+    } 
+    *head_ref = prev; 
+} 
 
-    // Reverse current node's pointer
-    current->next = prev;
-
-    // Move pointers one position ahead.
-    prev = current;
-    current = next;
+/* Function to print linked list */
+void printList(struct Node* node) {
+  while (node != NULL) {
+    printf("%s ", node->data);
+    node = node->next;
   }
-  head_ref = prev;
 }
+/* Counts no. of nodes in linked list */
+int getCount(struct Node* head)  
+{  
+    int count = 0; // Initialize count  
+    struct Node* current = head; // Initialize current  
+    while (current != NULL)  
+    {  
+        count++;  
+        current = current->next;  
+    }  
+    return count;  
+}  
+
 /* Function to find the only person left
    after one in every m-th node is killed
    in a circle of n nodes */
 void getJosephusPosition(int m) {
   if (m == 0) {
     printf("Nobody is going to die. \nWhat a wonderful day!\n");
-  } else if (m == 1) {
+  } 
+  else if (m == 1) {
     printf("Oops, everyone is going to die.\n");
-  } else {
+  } 
+  else {
     struct Node* head = malloc(sizeof(struct Node));
     struct Node* prev = head;
     char file_name[] = "Josephus_data.txt";
@@ -92,12 +117,13 @@ void getJosephusPosition(int m) {
         "Which side would you like to start "
         "killing?\n\n\t(1)rigth\n\t(2)left\n");
     scanf("%d", &direction);
-
+    
     switch (direction) {
       case 1:
+        printf("head data: %s\n", head->data);
         prev->next = head;  // Connect last
                             // node to first
-
+        //printf("count of nodes is %d\n",getCount(head));
         /* while only one node is left in the
         linked list*/
         struct Node *ptr1 = head, *ptr2 = head;
@@ -122,10 +148,11 @@ void getJosephusPosition(int m) {
 
         break;
       case 2:
+        printf("head data: %s\n", head->data);
         prev->next = head;  // Connect last
                             // node to first
         // printf("test: %s\n",head->next->data);
-        reverse(head);
+        reverse(&head);
 
         /* while only one node is left in the
         linked list*/
@@ -165,7 +192,8 @@ int main() {
   //   printf("%s %d; %d; %d\n", wday[p->tm_wday], p->tm_hour, p->tm_min,
   //   p->tm_sec);
   printf("month: %d, Date: %d\n", (1 + p->tm_mon), p->tm_mday);
-  m = (1 + p->tm_mon) * p->tm_mday % 5;
+  // m = (1 + p->tm_mon) * p->tm_mday % 5;
+  m=3;
   printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
   // printf("%d * %d mod 5 = %d\n", 8, 27, m);
   getJosephusPosition(m);

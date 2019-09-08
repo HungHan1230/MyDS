@@ -91,10 +91,12 @@ int main(void) {
 
   printf("Given linked list \n");
   printList(head);
+  printf("head data: %d\n", head->data);
   rotate(&head, 5);
 
   printf("\nRotated Linked list \n");
   printList(head);
+  printf("head data: %d\n", head->data);
   printf("\n");
 
   return (0);

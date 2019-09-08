@@ -46,6 +46,18 @@ void printList(struct Node* head)
         temp = temp->next; 
     } 
 } 
+/* Counts no. of nodes in linked list */
+int getCount(struct Node* head)  
+{  
+    int count = 0; // Initialize count  
+    struct Node* current = head; // Initialize current  
+    while (current != NULL)  
+    {  
+        count++;  
+        current = current->next;  
+    }  
+    return count;  
+}  
   
 /* Driver program to test above function*/
 int main() 
@@ -65,4 +77,5 @@ int main()
     printList(head);
     printf("\n"); 
     //getchar(); 
+    printf("count of nodes is %d\n",getCount(head));
 } 
