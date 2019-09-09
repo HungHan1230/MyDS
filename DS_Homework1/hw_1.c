@@ -15,6 +15,7 @@ char article;
 char* text;
 char mytext[400];
 char* CipherText;
+char cipher[400];
 char* key;
 char keyarray[5];
 Data data[52];
@@ -29,12 +30,12 @@ void findAnswer();
 
 int main() {
     //int num = 0, flag = 1;
-    CipherText =
-        "rnernvfgurguveqcynargsebzgurFhanaqgurbaylnfgebabzvpnybowrpgxabjagbuneo"
-        "beyvsr";
-    printf("The Ciphertext : %s \n", CipherText);
+    // CipherText =
+    //     "rnernvfgurguveqcynargsebzgurFhanaqgurbaylnfgebabzvpnybowrpgxabjagbuneo"
+    //     "beyvsr";
+    // printf("The Ciphertext : %s \n", CipherText);
     
-    //Read article.txt and answer_dic.csv from disk.
+    //Read article.txt ,answer_dic.csv and Ciphertext from disk.
     ReadData();
     printf("\n");
 
@@ -55,6 +56,7 @@ void ReadData() {
     char* result = NULL;
     int count = 0;
 
+    // read answer_dic.csv
     file = fopen(file_name, "r");
 
     if (!file) {
@@ -71,6 +73,8 @@ void ReadData() {
     }
 
     fclose(file);
+
+    // read article.txt
     file = fopen("article.txt", "r");
     int countc = 0;
     text = mytext;
@@ -88,7 +92,12 @@ void ReadData() {
         fprintf(stderr, "failed to open file for reading\n");
     }
     fclose(file);
-    printf("\narticle:\n%s \n", text);    
+
+    file = fopen("Ciphertext.txt","r");
+    fscanf(file,"%s",cipher);
+    printf("The Ciphertext: %s\n",cipher);
+    CipherText = cipher;
+    fclose(file);    
 }
 
 void CaesarPasswd() {
