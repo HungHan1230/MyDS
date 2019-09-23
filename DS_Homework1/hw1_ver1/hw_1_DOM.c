@@ -86,7 +86,7 @@ void ReadData() {
 }
 
 void ROT13CaesarPasswd() {
-  int i, j, k, t;
+  int i;
   int move = 13;
   memset(passwd, '\0', sizeof(passwd));
   strncpy(passwd, CipherText, 76);
