@@ -16,8 +16,16 @@ void ReadFile() {
   //   printf("%s\n", csvdata);
   int count = 0;
   while (fscanf(file, "%[^\n]%*c", csvdata) != EOF) {
-    printf("%d : %s\n",count, csvdata);
+    printf("%d : %s\n", count, csvdata);
     count++;
+  }
+  char fgetstr[20];
+  memset(fgetstr, '\0', sizeof(fgetstr));
+  // fgets(fgetstr, sizeof(fgetstr), stdin);
+  // printf("%s", fgetstr);
+
+  while (fgets(fgetstr, sizeof(fgetstr), stdin)) {
+    printf("print: %s\n",fgetstr);
   }
 
   fclose(file);

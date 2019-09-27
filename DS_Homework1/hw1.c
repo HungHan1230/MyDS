@@ -8,70 +8,56 @@ typedef struct {
 } Data;
 
 int sumoflps;
-char indexArray[5];
-char txt[300];
-char passwd[20];
+char indexArray[3];
+char txt[400];
+char passwd[10];
+char ciphertext[100];
 
-void ReadData() {  
-  char* result = NULL;
+char fgetstr[20];
+char* result = NULL;
+Data data[52];
+
+void Read() {
   int count = 0;
 
-  // read answer_dic.csv
-  FILE *file = fopen("", "r");
+    // scanf("%s", ciphertext);
+  fgets(ciphertext, sizeof(ciphertext), stdin);
+    // scanf("%[^\n]s\n", txt);
+  fgets(txt, sizeof(txt), stdin);
+    // while (fgets(txt, sizeof(txt), stdin)) {
+  //   printf("adsf");
+  // }
 
-  if (!file) {
-    fprintf(stderr, "failed to open file answer_dic.csv\n");
-  }
-
-  while (fgets(line, 100, file) != NULL) {
-    result = strtok(line, ",");
+  memset(fgetstr, '\0', sizeof(fgetstr));
+  while ((fgets(fgetstr, sizeof(fgetstr), stdin)) != NULL) {
+    result = strtok(fgetstr, ",");
     strcpy(data[count].key, result);
-
     result = strtok(NULL, ",");
     strcpy(data[count].value, result);
+    // printf("\nkey : %s, value : %s\n",data[count].key,data[count].value);
     count += 1;
   }
-
-  fclose(file);
-
-  // read article.txt
-  file = fopen("article.txt", "r");
-  int countc = 0;
-  text = mytext;
-
-  if (file) {
-    while (article != EOF) {
-      article = fgetc(file);
-      if (article != EOF) {
-        mytext[countc] = article;
-        countc++;
-      }
-    }
-  } else {
-    fprintf(stderr, "failed to open file for reading\n");
-  }
-  fclose(file);
-
-  file = fopen("Ciphertext.txt", "r");
-  fscanf(file, "%s", cipher);  
-  CipherText = cipher;
-  fclose(file);
 }
-
 void ROT13CaesarPasswd() {
   int i;
   int move = 13;
 
-  for (i = 0; i < strlen(passwd); i++) {
-    if (passwd[i] >= 'A' && passwd[i] <= 'Z') {
-      passwd[i] = ((passwd[i] - 'A') + move) % 26 + 'A';
-    } else if (passwd[i] >= 'a' && passwd[i] <= 'z') {
-      passwd[i] = ((passwd[i] - 'a') + move) % 26 + 'a';
+  for (i = 0; i < strlen(ciphertext); i++) {
+    if (ciphertext[i] >= 'A' && ciphertext[i] <= 'Z') {
+      ciphertext[i] = ((ciphertext[i] - 'A') + move) % 26 + 'A';
+    } else if (ciphertext[i] >= 'a' && ciphertext[i] <= 'z') {
+      ciphertext[i] = ((ciphertext[i] - 'a') + move) % 26 + 'a';
     }
+  }
+  printf("%s", ciphertext);
+}
+
+void ConstructKey() {
+  for (int i = 0; i < 5; i++) {
+    passwd[i] = ciphertext[i];
   }
   printf("%s\n", passwd);
 }
-
 // Fills lps[] for given patttern pat[0..M-1]
 void computeLPSArray(char* pat, int M, int* lps) {
   // length of the previous longest prefix suffix
@@ -108,7 +94,6 @@ void computeLPSArray(char* pat, int M, int* lps) {
   }
   printf("%d\n", sumoflps);
 }
-
 // Prints occurrences of txt[] in pat[]
 void KMPSearch(char* pat, char* txt) {
   int M = strlen(pat);
@@ -148,37 +133,38 @@ void KMPSearch(char* pat, char* txt) {
     }
   }
 }
-
 void FindAnswer() {
+  int passwdSize = sizeof(indexArray);
+  int dataSize = sizeof(data) / sizeof(Data);
+
+  char finalAnswer[100];
+  memset(finalAnswer, '\0', sizeof(finalAnswer));
+
   for (int i = 0; i < sizeof(indexArray); i++) {
     printf("%d\n", indexArray[i]);
   }
-  for (int i = 0; i < sizeof(indexArray); i++) {
-    printf("%c", indexArray[i]);
-  }
-  printf("\n");
-}
 
+  for (int i = 0; i < dataSize; i++) {
+    for (int j = 0; j < passwdSize; j++) {
+      int d = data[i].key[0];
+      if (d == indexArray[j]) {
+        strcat(finalAnswer, data[i].value);
+      }
+    }
+  } 
+
+  for(int index; index< strlen(finalAnswer);index++){
+        if(finalAnswer[index] == '\n')
+            finalAnswer[index] = ' ';
+  }
+  printf("%s \n", finalAnswer);  
+}
 // Driver program to test above function
 int main() {
-  // GodsaidLettherebelightandtherewaslight.AndGodsawthelight,thatitwalilighsgolilighod:andGoddividelilighdthefrolilighmthelilighdkness.Namingthe,Day,andthedark,Night.Andtherewaseveningandtherewasmorning,thefirstday.
-  // yvyvtu
-  // liligh 
-
-  // yadtsrifeht,gninromsawerehtdnagninevesawerehtdnA.thgiN,kradehtdgalgana,yaDgalga,ehtgnimaN.ssenkdgalgaehtmgalgaorfehtdgalgaedividdoGdna:doogsawtitaht,thgilehtwasdoGdnA.thgilsawerehtdnathgileberehtteLdiasdoGsA
-  // tnytn
-  // galga
-
-  //   printf("輸入txt：");
-  scanf("%s", txt);
-
-  //   printf("輸入pat：");
-  scanf("%s", passwd);
-
+  Read();
   ROT13CaesarPasswd();
-
+  ConstructKey();
   KMPSearch(passwd, txt);
-
   FindAnswer();
   return 0;
 }
