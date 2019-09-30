@@ -8,12 +8,12 @@ typedef struct {
 } Data;
 
 int sumoflps;
-char indexArray[3];
+char indexArray[4];
 char txt[400];
 char passwd[10];
 char ciphertext[100];
 
-char fgetstr[20];
+char fgetstr[30];
 char* result = NULL;
 Data data[52];
 
@@ -141,6 +141,8 @@ void FindAnswer() {
   memset(finalAnswer, '\0', sizeof(finalAnswer));
 
   for (int i = 0; i < sizeof(indexArray); i++) {
+    if(indexArray[i] == 0)
+      break;
     printf("%d\n", indexArray[i]);
   }
 
@@ -153,7 +155,7 @@ void FindAnswer() {
     }
   } 
 
-  for(int index; index< strlen(finalAnswer);index++){
+  for(int index = 0; index< strlen(finalAnswer);index++){
         if(finalAnswer[index] == '\n')
             finalAnswer[index] = ' ';
   }

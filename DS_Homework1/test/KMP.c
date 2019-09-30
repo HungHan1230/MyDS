@@ -84,13 +84,13 @@ int main() {
     //     "andthedark,Night.Andtherewaseveningandtherewasmorning,thefirstday.";
     // char pat[] = "light";
 
-  char txt[200];
-  printf("輸入txt：");
-  scanf("%s", txt);
+  char txt[400] = "Hear the word of the LORD of hosts had left unto us a very small sodss, we should have been as sodsssodss and sodss, have been like Sodom, and the Gomorrah would have been ours. To what purpose is the multitude of your sacrifices unto me? saith the LORD: I am full of the burnt offerings of rams, and the fat of fed beasts; and I delight not in the blood of bullocks, or of lambs, or of he goats.";
+  // printf("輸入txt：");
+  // scanf("%s", txt);
 
-  char pat[20];
-  printf("輸入pat：");
-  scanf("%s", pat);
+  char pat[100] = "sodss";
+  // printf("輸入pat：");
+  // scanf("%s", pat);
 
   KMPSearch(pat, txt);
   return 0;
