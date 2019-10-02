@@ -8,7 +8,7 @@ typedef struct {
 } Data;
 
 int sumoflps;
-char indexArray[4];
+char indexArray[10];
 char txt[400];
 char passwd[10];
 char ciphertext[100];

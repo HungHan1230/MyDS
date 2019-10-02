@@ -84,11 +84,11 @@ int main() {
     //     "andthedark,Night.Andtherewaseveningandtherewasmorning,thefirstday.";
     // char pat[] = "light";
 
-  char txt[400] = "Hear the word of the LORD of hosts had left unto us a very small sodss, we should have been as sodsssodss and sodss, have been like Sodom, and the Gomorrah would have been ours. To what purpose is the multitude of your sacrifices unto me? saith the LORD: I am full of the burnt offerings of rams, and the fat of fed beasts; and I delight not in the blood of bullocks, or of lambs, or of he goats.";
+  char txt[400] = ".sruo neeb evah dluow harromoG eht dna ,modoS ekil neeb evah ,aaaaa dna aaaaaaaaaa sa neeb evah dluohs ew ,aaaaa llams yrev a su otnu tfel dah stsoh fo DROL eht fo drow eht raeH.dna ;stsaeb def fo taf eht dna ,smar fo sgnireffo tnrub eht fo lluf ma I :DROL eht htias ?em otnu secifircas ruoy fo edutitlum eht si eprup tahw oT";
   // printf("輸入txt：");
   // scanf("%s", txt);
 
-  char pat[100] = "sodss";
+  char pat[100] = "aaaaa";
   // printf("輸入pat：");
   // scanf("%s", pat);
 
