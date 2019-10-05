@@ -12,8 +12,6 @@ struct dic {
   char s[size];
 };
 int ff(char p[], int fal[]) {
-  printf("enter ff function...\n");
-
   int sum = 0, largest, i, lenth;
   lenth = strlen(p);
   for (i = 5; i > 0; i--)
@@ -28,12 +26,9 @@ int ff(char p[], int fal[]) {
     fal[i] = largest;
     sum += p[i];
   }
-
   return sum;
 }
 int kmp(char p[], char a[], int fal[]) {
-  printf("kmp executing...\n");
-
   int i = 1, j = 0, la, lp;
   la = strlen(a);
   lp = strlen(p);
@@ -54,20 +49,14 @@ int main() {
       AB[size] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\0",
       ab[size] = "abcdefghijklmnopqrstuvwxyz\0";
   struct dic ans[SIZE];
-//   freopen("hw1.txt", "r", stdin);
+  freopen("hw1.txt", "r", stdin);
   p = fgets(cip, Bsize, stdin);
-  printf("cip %s\n", cip);
+  printf("%s\n", cip);
   p = fgets(article, Bsize, stdin);
   for (i = 0; i < size; i++) {
     scanf("\n%c,", &ans[i].key);
     p = fgets(ans[i].s, SIZE, stdin);
-    // printf("read %d : %c, %s\n", i, ans[i].key, p);
   }
-  printf("ans.key : %c, ans.value : %s\n", ans[50].key, ans[50].s);
-
-  // there's no close function for file stream
-//   fclose(stdin);
-
   len_c = strlen(cip);
   for (i = 0; i < len_c; i++) {
     if ((cip[i] - 'A') < 26) {
@@ -78,15 +67,10 @@ int main() {
       cip[i] = ab[r];
     }
   }
-  printf("cip2 %s\n", cip);
-  // cip[6] is the 7 posistion. so here you should set up the cip[5].
-  cip[5] = '\0';
-  printf("cip[5] %s\n", cip);
+  printf("%s\n", cip);
+  cip[6] = '\0';
   sum = ff(cip, fal);
-  printf("fal[4]:%d\n",fal[4]);
-
-  printf("sum %d\n", sum);
-  printf("enter while loop...\n");
+  printf("%d\n", sum);
   while (j >= 0) {
     if (j)
       j += 3;
@@ -94,7 +78,6 @@ int main() {
       printf("%s\n", ans[j - A_ascii].s);
     else
       printf("%s\n", ans[j - a_ascii + 26].s);
-    printf("j-A_ascii %c\n", (j - A_ascii));
     j = kmp(cip, article + j, fal);
     if (j != -1)
       printf("%d\n", j + 3);
