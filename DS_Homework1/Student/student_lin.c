@@ -54,14 +54,14 @@ int main() {
       AB[size] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\0",
       ab[size] = "abcdefghijklmnopqrstuvwxyz\0";
   struct dic ans[SIZE];
-//   freopen("hw1.txt", "r", stdin);
+  freopen("hw1.txt", "r", stdin);
   p = fgets(cip, Bsize, stdin);
   printf("cip %s\n", cip);
   p = fgets(article, Bsize, stdin);
   for (i = 0; i < size; i++) {
     scanf("\n%c,", &ans[i].key);
     p = fgets(ans[i].s, SIZE, stdin);
-    // printf("read %d : %c, %s\n", i, ans[i].key, p);
+    printf("read %d : %c, %s\n", i, ans[i].key, p);
   }
   printf("ans.key : %c, ans.value : %s\n", ans[50].key, ans[50].s);
 

@@ -18,7 +18,8 @@ int failure_table(char pattern[], int failure[]) {
   for (int i = 0; i < n; i++) {  // sum of prefix
     sum += failure[i];
   }
-  for (i = n - 1; i > 0;i--) {  //�������Ჾ�@��A�Ĥ@��]�w��-1
+  for (i = n - 1; i > 0;
+       i--) {  //�������Ჾ�@��A�Ĥ@��]�w��-1
     failure[i] = failure[i - 1];
   }
   failure[0] = -1;
@@ -40,7 +41,7 @@ int KMP(char s[], char pattern[], int match_table[]) {
       i++;
       j++;
     } 
-	else
+    else
       j = failure[j];
     if (j == -1) {
       j = 0;

@@ -19,6 +19,7 @@ Data data[52];
 
 void Read() {
   int count = 0;
+  freopen("Student/data.txt", "r", stdin);
 
     // scanf("%s", ciphertext);
   fgets(ciphertext, sizeof(ciphertext), stdin);
