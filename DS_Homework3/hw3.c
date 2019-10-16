@@ -3,10 +3,10 @@
 #include <string.h>
 #include <time.h>
 
-FILE* file;
 time_t timep;
 struct tm* p;
 int direction = 0;
+char NumForKill[5];
 
 /* structure for a node in circular
    linked list */
@@ -16,14 +16,12 @@ struct Node {
 };
 
 /* Function to print linked list */
-void printList(struct Node* node) {
-  printf("\n");
+void printList(struct Node* node) {  
   while (node != NULL) {
     if (node->next != NULL) {
       printf("%s -> ", node->data);
       node = node->next;
-    } 
-    else {
+    } else {
       printf("%s ", node->data);
       node = node->next;
     }
@@ -61,7 +59,7 @@ void reverse(struct Node* head_ref) {
 // updates the head. The function assumes that k is smaller
 // than size of linked list. It doesn't modify the list if
 // k is greater than or equal to size
-void rotate(struct Node** head_ref,struct Node** prev, int k) {
+void rotate(struct Node** head_ref, struct Node** prev, int k) {
   if (k == 0)
     return;
   // Let us understand the below code for example k = 4 and
@@ -91,7 +89,7 @@ void rotate(struct Node** head_ref,struct Node** prev, int k) {
   // change next of kth node to NULL
   // next of 40 is now NULL
   kthNode->next = NULL;
-  *prev = kthNode;  
+  *prev = kthNode;
 }
 /* Function to change the order of the linked list*/
 void OddEven(struct Node** head) {
@@ -110,86 +108,85 @@ void OddEven(struct Node** head) {
 }
 
 void ReadData(struct Node** head, struct Node** prev) {
-  char file_name[] = "data.txt";
   int count = 0;
   char line[256];
 
-//   printf("\nRead data from %s... \n", file_name);
-  file = fopen(file_name, "r");
-  if (file == NULL) {
-    printf("No file!\n");
-    exit(1);
-  }
+  freopen("data2.txt", "r", stdin);
+  fgets(NumForKill, sizeof(NumForKill), stdin);
 
-  while (fgets(line, 256, file)) {
+  while (fgets(line, 256, stdin)) {
     if (count == 0) {
       line[strlen(line) - 1] = '\0';
       strcpy((*head)->data, line);
-    //   printf("%s is appended. \n", line);
+      //   printf("%s is appended. \n", line);
     }
     // using another pointer prev for Josephus later
     else {
       line[strlen(line) - 1] = '\0';
       (*prev)->next = malloc(sizeof(struct Node));
       strcpy((*prev)->next->data, line);
-    //   printf("%s is appended. \n", line);
+      //   printf("%s is appended. \n", line);
       *prev = (*prev)->next;
     }
     count++;
   }
+  fclose(stdin);
 }
 /* Function to find the only person left
    after one in every m-th node is killed
    in the circular linked list. */
-void getJosephusPosition(int m) {
+void getJosephusPosition() {
   struct Node* head = malloc(sizeof(struct Node));
   struct Node* prev = head;
-  ReadData(&head, &prev);
-  printf("\n");
+  int m;
+  ReadData(&head, &prev);  
+  m = atoi(NumForKill);
   printList(head);
 
-//   printf("---------------\nChange order by odd even function.\n");
+  //   printf("---------------\nChange order by odd even function.\n");
   OddEven(&head);
   printList(head);
 
-//   printf("---------------\nChange order by rotate function with index = %d.\n",m);
-  rotate(&head,&prev, m);
+  //   printf("---------------\nChange order by rotate function with index =
+  //   %d.\n",m);
+  rotate(&head, &prev, m);
   printList(head);
 
-//   printf("---------------\nEveryone is ready. Start elimination.\n");
-  printf(
-      "Which side would you like to start "
-      "?\n\n\t(1)rigth\n\t(2)left\n");
-  scanf("%d", &direction);
+  //   printf("---------------\nEveryone is ready. Start elimination.\n");
+  // printf(
+  //     "Which side would you like to start "
+  //     "?\n\n\t(1)rigth\n\t(2)left\n");
+  // scanf("%d", &direction);
+  int direction = m % 2 + 1;
 
   switch (direction) {
-    case 1:      
+    case 1:
       prev->next = head;  // Connect last
                           // node to first
 
       /* while only one node is left in the
       linked list*/
       struct Node *ptr1 = head, *ptr2 = head;
+
       while (ptr1->next != ptr1) {
         // Find m-th node
-        int count = 1;        
+        int count = 1;
         while (count != m) {
           ptr2 = ptr1;
           ptr1 = ptr1->next;
           count++;
         }
         /* Remove the m-th node */
+        printf("%s is killed!\n",ptr2->next->data);
         ptr2->next = ptr1->next;
         ptr1 = ptr2->next;
       }
-      printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
-             ptr1->data, (1 + p->tm_mon), p->tm_mday);
-
+      printf("%s\n", ptr1->data);
       break;
-    case 2:      
+    case 2:
       prev->next = head;  // Connect last
                           // node to first
-      reverse(head);      
+      reverse(head);
 
       /* while only one node is left in the
       linked list*/
@@ -203,31 +200,16 @@ void getJosephusPosition(int m) {
           count++;
         }
         /* Remove the m-th node */
+        printf("%s is killed!\n",ptr22 -> next->data);
         ptr22->next = ptr12->next;
         ptr12 = ptr22->next;
       }
-      printf("\nFinish elimination.\n%s is the final survivor of %d/%d.\n",
-             ptr12->data, (1 + p->tm_mon), p->tm_mday);
+      printf("%s\n", ptr12->data);
       break;
   }
 }
 
 int main() {
-  int m;
-  time(&timep);
-  p = gmtime(&timep);
-  printf("Today is %d/%d.\n", (1 + p->tm_mon), p->tm_mday);
-  m = (1 + p->tm_mon) * p->tm_mday % 5;  
-  printf("%d * %d mod 5 = %d\n", (1 + p->tm_mon), p->tm_mday, m);
-  // printf("%d * %d mod 5 = %d\n", 8, 27, m);
-  if (m == 0) {
-    printf("default m = 2\n");
-    m = 2;
-  } 
-  else
-    printf("m = %d\n", m);
-
-  getJosephusPosition(m);
-
+  getJosephusPosition();
   return 0;
 }
