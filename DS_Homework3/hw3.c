@@ -16,7 +16,7 @@ struct Node {
 };
 
 /* Function to print linked list */
-void printList(struct Node* node) {  
+void printList(struct Node* node) {
   while (node != NULL) {
     if (node->next != NULL) {
       printf("%s -> ", node->data);
@@ -111,7 +111,7 @@ void ReadData(struct Node** head, struct Node** prev) {
   int count = 0;
   char line[256];
 
-  freopen("data2.txt", "r", stdin);
+  freopen("data3.txt", "r", stdin);
   fgets(NumForKill, sizeof(NumForKill), stdin);
 
   while (fgets(line, 256, stdin)) {
@@ -122,7 +122,10 @@ void ReadData(struct Node** head, struct Node** prev) {
     }
     // using another pointer prev for Josephus later
     else {
-      line[strlen(line) - 1] = '\0';
+      // take out the '\n' charater, or the result of execution would be pretty
+      // awful!
+      if (line[strlen(line) - 1] == '\n')
+        line[strlen(line) - 1] = '\0';
       (*prev)->next = malloc(sizeof(struct Node));
       strcpy((*prev)->next->data, line);
       //   printf("%s is appended. \n", line);
@@ -139,7 +142,7 @@ void getJosephusPosition() {
   struct Node* head = malloc(sizeof(struct Node));
   struct Node* prev = head;
   int m;
-  ReadData(&head, &prev);  
+  ReadData(&head, &prev);
   m = atoi(NumForKill);
   printList(head);
 
@@ -161,6 +164,7 @@ void getJosephusPosition() {
 
   switch (direction) {
     case 1:
+      printf("right\n");
       prev->next = head;  // Connect last
                           // node to first
 
@@ -177,13 +181,14 @@ void getJosephusPosition() {
           count++;
         }
         /* Remove the m-th node */
-        printf("%s is killed!\n",ptr2->next->data);
+        printf("%s is killed!\n", ptr2->next->data);
         ptr2->next = ptr1->next;
         ptr1 = ptr2->next;
       }
       printf("%s\n", ptr1->data);
       break;
     case 2:
+      printf("left\n");
       prev->next = head;  // Connect last
                           // node to first
       reverse(head);
@@ -200,7 +205,7 @@ void getJosephusPosition() {
           count++;
         }
         /* Remove the m-th node */
-        printf("%s is killed!\n",ptr22 -> next->data);
+        printf("%s is killed!\n", ptr22->next->data);
         ptr22->next = ptr12->next;
         ptr12 = ptr22->next;
       }
