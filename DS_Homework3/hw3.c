@@ -6,7 +6,9 @@
 time_t timep;
 struct tm* p;
 int direction = 0;
+char NumForRotate[5];
 char NumForKill[5];
+char NumForDirection[5];
 
 /* structure for a node in circular
    linked list */
@@ -111,7 +113,9 @@ void ReadData(struct Node** head, struct Node** prev) {
   int count = 0;
   char line[256];
 
-  freopen("data3.txt", "r", stdin);
+  freopen("data.txt", "r", stdin);
+  fgets(NumForRotate, sizeof(NumForRotate), stdin);
+  fgets(NumForDirection, sizeof(NumForDirection), stdin);
   fgets(NumForKill, sizeof(NumForKill), stdin);
 
   while (fgets(line, 256, stdin)) {
@@ -141,9 +145,10 @@ void ReadData(struct Node** head, struct Node** prev) {
 void getJosephusPosition() {
   struct Node* head = malloc(sizeof(struct Node));
   struct Node* prev = head;
-  int m;
+  int m,NumRotate,NumDirection;
   ReadData(&head, &prev);
   m = atoi(NumForKill);
+  NumRotate = atoi(NumForRotate);
   printList(head);
 
   //   printf("---------------\nChange order by odd even function.\n");
@@ -152,7 +157,7 @@ void getJosephusPosition() {
 
   //   printf("---------------\nChange order by rotate function with index =
   //   %d.\n",m);
-  rotate(&head, &prev, m);
+  rotate(&head, &prev, NumRotate);
   printList(head);
 
   //   printf("---------------\nEveryone is ready. Start elimination.\n");
@@ -160,11 +165,12 @@ void getJosephusPosition() {
   //     "Which side would you like to start "
   //     "?\n\n\t(1)rigth\n\t(2)left\n");
   // scanf("%d", &direction);
-  int direction = m % 2 + 1;
+  // int direction = m % 2 + 1;
+  NumDirection = atoi(NumForDirection);
 
-  switch (direction) {
+  switch (NumDirection) {
     case 1:
-      printf("right\n");
+      // printf("right\n");
       prev->next = head;  // Connect last
                           // node to first
 
@@ -188,7 +194,7 @@ void getJosephusPosition() {
       printf("%s\n", ptr1->data);
       break;
     case 2:
-      printf("left\n");
+      // printf("left\n");
       prev->next = head;  // Connect last
                           // node to first
       reverse(head);
