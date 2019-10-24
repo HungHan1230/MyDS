@@ -113,7 +113,7 @@ void ReadData(struct Node** head, struct Node** prev) {
   int count = 0;
   char line[256];
 
-  freopen("data.txt", "r", stdin);
+  // freopen("data.txt", "r", stdin);
   fgets(NumForRotate, sizeof(NumForRotate), stdin);
   fgets(NumForDirection, sizeof(NumForDirection), stdin);
   fgets(NumForKill, sizeof(NumForKill), stdin);
@@ -137,7 +137,7 @@ void ReadData(struct Node** head, struct Node** prev) {
     }
     count++;
   }
-  fclose(stdin);
+  // fclose(stdin);
 }
 /* Function to find the only person left
    after one in every m-th node is killed
@@ -145,7 +145,7 @@ void ReadData(struct Node** head, struct Node** prev) {
 void getJosephusPosition() {
   struct Node* head = malloc(sizeof(struct Node));
   struct Node* prev = head;
-  int m,NumRotate,NumDirection;
+  int m, NumRotate, NumDirection;
   ReadData(&head, &prev);
   m = atoi(NumForKill);
   NumRotate = atoi(NumForRotate);
@@ -187,7 +187,7 @@ void getJosephusPosition() {
           count++;
         }
         /* Remove the m-th node */
-        printf("%s is killed!\n", ptr2->next->data);
+        printf("%s died\n", ptr2->next->data);
         ptr2->next = ptr1->next;
         ptr1 = ptr2->next;
       }
