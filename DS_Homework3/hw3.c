@@ -148,6 +148,7 @@ void getJosephusPosition() {
   int m, NumRotate, NumDirection;
   ReadData(&head, &prev);
   m = atoi(NumForKill);
+  m = m+1;
   NumRotate = atoi(NumForRotate);
   printList(head);
 
