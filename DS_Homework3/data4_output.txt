@@ -1,0 +1,17 @@
+Jim -> Tom -> Henry -> Hank -> WenJ -> Cody -> Sine -> Ben -> Edward -> Peter -> Helen -> Patty -> Yuling -> Haoze 
+Jim -> Henry -> WenJ -> Sine -> Edward -> Helen -> Yuling -> Tom -> Hank -> Cody -> Ben -> Peter -> Patty -> Haoze 
+Edward -> Helen -> Yuling -> Tom -> Hank -> Cody -> Ben -> Peter -> Patty -> Haoze -> Jim -> Henry -> WenJ -> Sine 
+Jim is killed!
+Cody is killed!
+Edward is killed!
+Patty is killed!
+Yuling is killed!
+Haoze is killed!
+Helen is killed!
+Ben is killed!
+Henry is killed!
+WenJ is killed!
+Peter is killed!
+Tom is killed!
+Sine is killed!
+Hank

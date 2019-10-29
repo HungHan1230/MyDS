@@ -1,0 +1,17 @@
+Yuling -> Tom -> Henry -> Hank -> WenJ -> Cody -> Sine -> Ben -> Edward -> Peter -> Helen -> Patty -> Haoze -> Jim 
+Yuling -> Henry -> WenJ -> Sine -> Edward -> Helen -> Haoze -> Tom -> Hank -> Cody -> Ben -> Peter -> Patty -> Jim 
+WenJ -> Sine -> Edward -> Helen -> Haoze -> Tom -> Hank -> Cody -> Ben -> Peter -> Patty -> Jim -> Yuling -> Henry 
+Sine died
+Helen died
+Tom died
+Cody died
+Peter died
+Jim died
+Henry died
+Edward died
+Hank died
+Patty died
+WenJ died
+Ben died
+Haoze died
+Yuling
